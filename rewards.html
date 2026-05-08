@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Streaks &amp; Rewards — The Five-Game Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+html {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Fraunces', Georgia, serif;
+  color: #1f1b14;
+  background: radial-gradient(ellipse at top, #f5edd6 0%, #ede4c9 60%, #e4d9b8 100%);
+}
+body {
+  margin: 0;
+  padding: 2rem 1rem 4rem;
+  position: relative;
+  overflow-x: hidden;
+}
+.grain {
+  position: fixed;
+  inset: 0;
+  background-image: repeating-radial-gradient(circle at 30% 20%, rgba(80,60,30,0.04) 0, rgba(80,60,30,0.04) 1px, transparent 1px, transparent 4px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+header.masthead {
+  text-align: center;
+  border-bottom: 2px solid #1f1b14;
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+}
+.vol {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  opacity: 0.6;
+}
+h1.title {
+  font-weight: 900;
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  line-height: 0.95;
+  margin: 0;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+.tagline {
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  opacity: 0.75;
+  font-style: italic;
+  max-width: 26rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+}
+.masthead-nav {
+  margin-top: 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.masthead-nav a {
+  color: #1f1b14;
+  text-decoration: none;
+  border-bottom: 1px solid #1f1b14;
+  padding-bottom: 1px;
+  opacity: 0.7;
+}
+.masthead-nav a:hover { opacity: 1; }
+
+section.block { margin-bottom: 2.5rem; }
+.section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 0.75rem;
+}
+.stat-card {
+  background: rgba(255,255,255,0.4);
+  border: 1.5px solid rgba(31,27,20,0.25);
+  padding: 1.1rem 1rem;
+  text-align: center;
+}
+.stat-card .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+.stat-card .value {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 2.4rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.stat-card .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  opacity: 0.55;
+  margin-top: 0.5rem;
+  line-height: 1.4;
+}
+
+.trend-grid {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+.trend-week {
+  flex: 1 0 auto;
+  min-width: 2.6rem;
+  aspect-ratio: 1 / 1.2;
+  border: 1.5px solid rgba(31,27,20,0.3);
+  background: rgba(255,255,255,0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #1f1b14;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  position: relative;
+}
+.trend-week.won { background: #3a5a3a; color: #f5edd6; border-color: transparent; }
+.trend-week.lost { background: #7a3a2e; color: #f5edd6; border-color: transparent; }
+.trend-week.split { background: #6a5a30; color: #f5edd6; border-color: transparent; }
+.trend-week .record {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+.trend-week .week {
+  opacity: 0.75;
+  margin-top: 0.2rem;
+  letter-spacing: 0.02em;
+}
+.trend-empty {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.55;
+  padding: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.next-up {
+  background: #1f1b14;
+  color: #f5edd6;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  position: relative;
+}
+.next-up .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+.next-up .name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.next-up .progress {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  opacity: 0.85;
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+.badge {
+  border: 1.5px solid rgba(31,27,20,0.25);
+  padding: 1.1rem 0.75rem 0.85rem;
+  text-align: center;
+  background: rgba(255,255,255,0.3);
+  position: relative;
+  transition: transform 0.15s ease;
+}
+.badge.earned {
+  background: #f5edd6;
+  border-color: #1f1b14;
+  box-shadow: 2px 3px 0 rgba(31,27,20,0.15);
+}
+.badge.earned:hover { transform: translateY(-1px); }
+.badge.earned::before {
+  content: 'earned';
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: #1f1b14;
+  color: #f5edd6;
+  padding: 0.15rem 0.4rem;
+}
+.badge .symbol {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  opacity: 0.35;
+  letter-spacing: -0.02em;
+}
+.badge.earned .symbol { opacity: 1; color: #1f1b14; }
+.badge .name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+.badge .desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+  min-height: 2.2em;
+}
+.badge .status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.05em;
+  opacity: 0.55;
+}
+.badge.earned .status {
+  opacity: 0.75;
+  font-weight: 600;
+}
+
+footer.signoff {
+  margin-top: 3rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85rem;
+  opacity: 0.55;
+  line-height: 1.5;
+}
+.signoff-nav {
+  margin-top: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-style: normal;
+  opacity: 1;
+}
+.signoff-nav a {
+  color: #1f1b14;
+  text-decoration: none;
+  border-bottom: 1px solid #1f1b14;
+  padding-bottom: 1px;
+  opacity: 0.7;
+}
+.signoff-nav a:hover { opacity: 1; }
+
+/* Toast (auto-rollover, same as main page) */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f1b14;
+  color: #f5edd6;
+  padding: 0.85rem 1.25rem;
+  border-left: 3px solid #f5edd6;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  z-index: 100;
+  cursor: pointer;
+  animation: toast-in 0.4s ease-out;
+  max-width: calc(100% - 2rem);
+  text-align: center;
+}
+.toast.toast-won { border-left-color: #6b9a6b; }
+.toast.toast-lost { border-left-color: #c47a6a; }
+.toast.toast-split { border-left-color: #b09a55; }
+.toast-label { opacity: 0.65; font-size: 0.6rem; letter-spacing: 0.25em; }
+.toast-detail { margin-top: 0.3rem; font-weight: 700; letter-spacing: 0.12em; font-size: 0.75rem; }
+.toast.toast-leaving { animation: toast-out 0.4s ease-in forwards; }
+@keyframes toast-in {
+  from { transform: translate(-50%, 120%); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+@keyframes toast-out {
+  to { transform: translate(-50%, 120%); opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="container">
+<header class="masthead">
+  <div class="vol">stats &amp; rewards · vol. 1</div>
+  <h1 class="title">Streaks &amp;<br/>Rewards</h1>
+  <p class="tagline">progress is what you've stacked up — not what you haven't.</p>
+  <nav class="masthead-nav"><a href="index.html">← back to this week</a></nav>
+</header>
+
+<section class="block">
+  <div class="section-label"><span>at a glance</span></div>
+  <div class="stat-grid" id="overview-grid"></div>
+</section>
+
+<section class="block">
+  <div class="section-label"><span>streaks</span></div>
+  <div class="stat-grid" id="streak-grid"></div>
+</section>
+
+<section class="block">
+  <div class="section-label"><span>recent weeks</span></div>
+  <div id="trend-slot"></div>
+</section>
+
+<section class="block">
+  <div class="section-label"><span>rewards</span></div>
+  <div id="next-up-slot"></div>
+  <div class="badge-grid" id="badge-grid"></div>
+</section>
+
+<footer class="signoff">
+keep showing up.<br/>
+that's how the wins stack.
+<div class="signoff-nav"><a href="index.html">← back to this week</a></div>
+</footer>
+</div>
+
+<script>
+const STORAGE_KEY = 'five_game_series_v1';
+
+function dateToISO(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+function getMondayOfWeek(date) {
+  const d = date ? new Date(date) : new Date();
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  d.setDate(d.getDate() + diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+function getDayDate(startISO, dayIndex) {
+  const start = new Date(startISO + 'T00:00:00');
+  start.setDate(start.getDate() + dayIndex);
+  return start;
+}
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+function formatWeekRange(startISO) {
+  const start = new Date(startISO + 'T00:00:00');
+  const end = new Date(start);
+  end.setDate(start.getDate() + 4);
+  return formatDate(startISO) + ' – ' +
+    end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+function emptyWeek() {
+  return {
+    startDate: dateToISO(getMondayOfWeek()),
+    games: [null, null, null, null, null],
+    note: ''
+  };
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return { currentWeek: emptyWeek(), history: [] };
+}
+function save(d) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+  catch (e) {}
+}
+function seriesStatus(games) {
+  const wins = games.filter(g => g === 'W').length;
+  const losses = games.filter(g => g === 'L').length;
+  const played = wins + losses;
+  return { wins, losses, played };
+}
+function archiveWeek(week, autoArchived) {
+  const { wins, losses } = seriesStatus(week.games);
+  let result;
+  if (wins >= 3) result = 'won';
+  else if (losses >= 3) result = 'lost';
+  else if (wins > losses) result = 'won';
+  else if (losses > wins) result = 'lost';
+  else result = 'split';
+  return {
+    startDate: week.startDate,
+    endDate: dateToISO(getDayDate(week.startDate, 4)),
+    games: week.games,
+    record: wins + '-' + losses,
+    result,
+    note: week.note || '',
+    autoArchived: !!autoArchived,
+  };
+}
+function checkRollover(d) {
+  const thisMonday = dateToISO(getMondayOfWeek());
+  if (d.currentWeek.startDate >= thisMonday) return null;
+  const { played } = seriesStatus(d.currentWeek.games);
+  if (played === 0) {
+    d.currentWeek = emptyWeek();
+    save(d);
+    return null;
+  }
+  const archived = archiveWeek(d.currentWeek, true);
+  d.history = [archived, ...d.history];
+  d.currentWeek = emptyWeek();
+  save(d);
+  return archived;
+}
+function showToast(archived) {
+  const verb = archived.result === 'won' ? 'taken' :
+               archived.result === 'lost' ? 'dropped' : 'split';
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + archived.result;
+  t.innerHTML =
+    '<div class="toast-label">last week archived</div>' +
+    '<div class="toast-detail">' + archived.record + ' &middot; series ' + verb + '</div>';
+  t.addEventListener('click', () => {
+    t.classList.add('toast-leaving');
+    setTimeout(() => t.remove(), 400);
+  });
+  document.body.appendChild(t);
+  setTimeout(() => {
+    if (!document.body.contains(t)) return;
+    t.classList.add('toast-leaving');
+    setTimeout(() => t.remove(), 400);
+  }, 5500);
+}
+
+// ---- Bootstrap ----
+const data = load();
+const rolledOver = checkRollover(data);
+const history = data.history || [];
+
+// ---- Compute stats ----
+const totalWeeks = history.length;
+const totalTaken = history.filter(w => w.result === 'won').length;
+const totalDropped = history.filter(w => w.result === 'lost').length;
+const totalSplit = history.filter(w => w.result === 'split').length;
+const takeRate = totalWeeks > 0 ? Math.round((totalTaken / totalWeeks) * 100) : 0;
+
+let currentStreak = 0;
+for (const w of history) {
+  if (w.result === 'won') currentStreak++;
+  else break;
+}
+let bestStreak = 0, run = 0;
+for (const w of history) {
+  if (w.result === 'won') { run++; bestStreak = Math.max(bestStreak, run); }
+  else run = 0;
+}
+
+const last10 = history.slice(0, 10);
+const last10Taken = last10.filter(w => w.result === 'won').length;
+
+// ---- Render Overview ----
+document.getElementById('overview-grid').innerHTML = `
+  <div class="stat-card">
+    <div class="label">weeks tracked</div>
+    <div class="value">${totalWeeks}</div>
+    <div class="sub">${totalTaken} taken &middot; ${totalDropped} dropped${totalSplit ? ' &middot; ' + totalSplit + ' split' : ''}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">take rate</div>
+    <div class="value">${takeRate}%</div>
+    <div class="sub">${totalWeeks === 0 ? 'nothing yet' : 'all time'}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">last 10</div>
+    <div class="value">${last10Taken}<span style="opacity:0.4;font-size:1.5rem">/${Math.max(1, last10.length)}</span></div>
+    <div class="sub">${last10.length === 0 ? 'nothing yet' : 'series taken'}</div>
+  </div>
+`;
+
+// ---- Render Streaks ----
+document.getElementById('streak-grid').innerHTML = `
+  <div class="stat-card">
+    <div class="label">current streak</div>
+    <div class="value">${currentStreak}</div>
+    <div class="sub">${currentStreak === 0 ? 'next one starts the streak' : 'series taken in a row'}</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">best streak</div>
+    <div class="value">${bestStreak}</div>
+    <div class="sub">${bestStreak === 0 ? 'not yet' : 'consecutive wins'}</div>
+  </div>
+`;
+
+// ---- Render Recent Weeks Trend ----
+const trendSlot = document.getElementById('trend-slot');
+const trendWeeks = history.slice(0, 12).reverse(); // oldest first, left to right
+if (trendWeeks.length === 0) {
+  trendSlot.innerHTML = '<div class="trend-empty">no weeks logged yet — close one out and it shows up here.</div>';
+} else {
+  trendSlot.innerHTML = '<div class="trend-grid">' + trendWeeks.map(w => `
+    <div class="trend-week ${w.result}" title="${formatWeekRange(w.startDate)} — ${w.record} (${w.result})">
+      <span class="record">${w.record}</span>
+      <span class="week">${formatDate(w.startDate)}</span>
+    </div>
+  `).join('') + '</div>';
+}
+
+// ---- Define Rewards ----
+function findFirstWonWeek() {
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].result === 'won') return history[i];
+  }
+  return null;
+}
+function findThreeInARow() {
+  // history is most-recent first; the END of the streak (latest week of the trio) sits at the lowest i
+  for (let i = 0; i <= history.length - 3; i++) {
+    if (history[i].result === 'won' && history[i+1].result === 'won' && history[i+2].result === 'won') {
+      return history[i];
+    }
+  }
+  return null;
+}
+function findHardWon() {
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].record === '3-2' && history[i].result === 'won') return history[i];
+  }
+  return null;
+}
+function findBounceBack() {
+  // Walk oldest-to-newest looking for a 'lost' immediately followed by 'won'
+  for (let i = history.length - 1; i >= 1; i--) {
+    if (history[i].result === 'lost' && history[i-1].result === 'won') {
+      return history[i-1];
+    }
+  }
+  return null;
+}
+function findTenthWeek() {
+  if (totalWeeks < 10) return null;
+  // 10th week chronologically = 10th from the end of history (which is most-recent first)
+  return history[history.length - 10];
+}
+function findTenthWon() {
+  if (totalTaken < 10) return null;
+  const wonOldestFirst = history.filter(w => w.result === 'won').reverse();
+  return wonOldestFirst[9] || null;
+}
+
+const rewards = [
+  {
+    id: 'first',
+    symbol: 'I',
+    name: 'First Series',
+    desc: 'Take your first series.',
+    earned: totalTaken >= 1,
+    earnedDate: () => { const w = findFirstWonWeek(); return w ? w.endDate : null; },
+    progress: () => Math.min(totalTaken, 1) + '/1',
+  },
+  {
+    id: 'tens',
+    symbol: '10',
+    name: 'Tens',
+    desc: 'Track ten weeks.',
+    earned: totalWeeks >= 10,
+    earnedDate: () => { const w = findTenthWeek(); return w ? w.endDate : null; },
+    progress: () => Math.min(totalWeeks, 10) + '/10',
+  },
+  {
+    id: 'three-peat',
+    symbol: 'III',
+    name: 'Three-Peat',
+    desc: 'Three series taken in a row.',
+    earned: bestStreak >= 3,
+    earnedDate: () => { const w = findThreeInARow(); return w ? w.endDate : null; },
+    progress: () => Math.min(currentStreak, 3) + '/3',
+  },
+  {
+    id: 'hard-won',
+    symbol: '3·2',
+    name: 'Hard Won',
+    desc: 'Take a series 3-2.',
+    earned: !!findHardWon(),
+    earnedDate: () => { const w = findHardWon(); return w ? w.endDate : null; },
+    progress: () => null,
+  },
+  {
+    id: 'bounce-back',
+    symbol: '↻',
+    name: 'Bounce Back',
+    desc: 'Take a series the week after dropping one.',
+    earned: !!findBounceBack(),
+    earnedDate: () => { const w = findBounceBack(); return w ? w.endDate : null; },
+    progress: () => null,
+  },
+  {
+    id: 'veteran',
+    symbol: 'X',
+    name: 'Veteran',
+    desc: 'Take ten series.',
+    earned: totalTaken >= 10,
+    earnedDate: () => { const w = findTenthWon(); return w ? w.endDate : null; },
+    progress: () => Math.min(totalTaken, 10) + '/10',
+  },
+];
+
+// ---- Next Up callout ----
+function findNextUp() {
+  const unearned = rewards.filter(r => !r.earned);
+  if (unearned.length === 0) return null;
+  let best = null, bestGap = Infinity;
+  for (const r of unearned) {
+    const p = r.progress ? r.progress() : null;
+    if (!p) continue;
+    const m = p.match(/^(\d+)\/(\d+)$/);
+    if (!m) continue;
+    const gap = (+m[2]) - (+m[1]);
+    if (gap < bestGap) { bestGap = gap; best = r; }
+  }
+  // Fall back to first unearned without numeric progress
+  return best || unearned[0];
+}
+
+const nextSlot = document.getElementById('next-up-slot');
+const next = findNextUp();
+if (next && totalWeeks > 0) {
+  const detail = next.progress && next.progress()
+    ? next.progress() + ' &middot; ' + next.desc.toLowerCase()
+    : next.desc.toLowerCase();
+  nextSlot.innerHTML = `
+    <div class="next-up">
+      <div class="label">next up</div>
+      <div class="name">${next.name}</div>
+      <div class="progress">${detail}</div>
+    </div>
+  `;
+} else if (totalWeeks === 0) {
+  nextSlot.innerHTML = `
+    <div class="next-up">
+      <div class="label">first up</div>
+      <div class="name">First Series</div>
+      <div class="progress">close out a winning week to start the record</div>
+    </div>
+  `;
+}
+
+// ---- Render Rewards Grid ----
+document.getElementById('badge-grid').innerHTML = rewards.map(r => {
+  const status = r.earned
+    ? (r.earnedDate() ? 'earned ' + formatDate(r.earnedDate()) : 'earned')
+    : (r.progress && r.progress() ? r.progress() : 'not yet');
+  return `
+    <div class="badge ${r.earned ? 'earned' : ''}">
+      <div class="symbol">${r.symbol}</div>
+      <div class="name">${r.name}</div>
+      <div class="desc">${r.desc}</div>
+      <div class="status">${status}</div>
+    </div>
+  `;
+}).join('');
+
+if (rolledOver) showToast(rolledOver);
+</script>
+</body>
+</html>
