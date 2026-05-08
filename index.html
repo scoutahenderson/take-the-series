@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Five-Game Series</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Fraunces', Georgia, serif;
+    color: #1f1b14;
+    background: radial-gradient(ellipse at top, #f5edd6 0%, #ede4c9 60%, #e4d9b8 100%);
+  }
+  body {
+    padding: 2rem 1rem 4rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+  .grain {
+    position: fixed;
+    inset: 0;
+    background-image: repeating-radial-gradient(circle at 30% 20%, rgba(80,60,30,0.04) 0, rgba(80,60,30,0.04) 1px, transparent 1px, transparent 4px);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  header.masthead {
+    text-align: center;
+    border-bottom: 2px solid #1f1b14;
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .vol {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+  }
+  h1.title {
+    font-weight: 900;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    line-height: 0.95;
+    margin: 0;
+    font-style: italic;
+    letter-spacing: -0.02em;
+  }
+  .tagline {
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    opacity: 0.75;
+    font-style: italic;
+    max-width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.4;
+  }
+  .section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .section-label .meta { opacity: 0.6; }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .game-box {
+    aspect-ratio: 1 / 1.15;
+    background: rgba(255,255,255,0.35);
+    border: 2px solid #1f1b14;
+    color: #1f1b14;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+    font-family: 'Fraunces', Georgia, serif;
+  }
+  .game-box:hover { transform: translateY(-2px); }
+  .game-box.win {
+    background: #3a5a3a;
+    color: #f5edd6;
+    border-color: transparent;
+    box-shadow: 2px 3px 0 rgba(31,27,20,0.25);
+  }
+  .game-box.loss {
+    background: #7a3a2e;
+    color: #f5edd6;
+    border-color: transparent;
+    box-shadow: 2px 3px 0 rgba(31,27,20,0.25);
+  }
+  .game-box .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    position: absolute;
+    top: 0.4rem;
+    left: 0.5rem;
+  }
+  .game-box .mark {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+  }
+
+  .status-line {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    border-top: 1px solid #1f1b14;
+    border-bottom: 1px solid #1f1b14;
+  }
+  .status-text {
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    letter-spacing: -0.01em;
+  }
+  .status-text.won { color: #3a5a3a; }
+  .status-text.lost { color: #7a3a2e; }
+  .record {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    margin-top: 0.4rem;
+    opacity: 0.7;
+  }
+  .record .remaining { opacity: 0.5; }
+
+  .note-block { margin-top: 1.5rem; }
+  .note-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  textarea.note {
+    width: 100%;
+    background: rgba(255,255,255,0.4);
+    border: 1px dashed rgba(31,27,20,0.4);
+    padding: 0.75rem;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: #1f1b14;
+    resize: vertical;
+    outline: none;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  button.btn {
+    background: transparent;
+    border: 1.5px solid #1f1b14;
+    color: #1f1b14;
+    padding: 0.7rem 1.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  button.btn:hover { background: #1f1b14; color: #f5edd6; }
+  button.btn.strong { background: #1f1b14; color: #f5edd6; }
+  button.btn.ghost {
+    border: 1.5px dashed rgba(31,27,20,0.4);
+    opacity: 0.7;
+  }
+
+  section.history { margin-top: 3rem; }
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #1f1b14;
+    padding-bottom: 0.5rem;
+  }
+  .empty {
+    font-style: italic;
+    opacity: 0.55;
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 0.95rem;
+  }
+  ul.history-list { list-style: none; padding: 0; margin: 0; }
+  li.history-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-bottom: 1px dotted rgba(31,27,20,0.25);
+  }
+  .row-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    min-width: 5rem;
+  }
+  .row-games { display: flex; gap: 0.2rem; }
+  .row-game {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(31,27,20,0.1);
+    color: #f5edd6;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+  .row-game.W { background: #3a5a3a; }
+  .row-game.L { background: #7a3a2e; }
+  .row-result {
+    font-style: italic;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .row-result.won { color: #3a5a3a; }
+  .row-result.lost { color: #7a3a2e; }
+  .row-result.split { color: #6a5a30; }
+  .row-note {
+    grid-column: 1 / -1;
+    font-style: italic;
+    opacity: 0.65;
+    font-size: 0.85rem;
+    padding-left: 0.25rem;
+    margin-top: -0.25rem;
+  }
+
+  .clear-zone {
+    text-align: center;
+    margin-top: 2rem;
+    opacity: 0.5;
+  }
+  .clear-zone .btn { font-size: 0.65rem; }
+
+  footer.signoff {
+    margin-top: 3rem;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.85rem;
+    opacity: 0.55;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="container">
+  <header class="masthead">
+    <div class="vol">est. now · vol. 1</div>
+    <h1 class="title">The Five-Game<br/>Series</h1>
+    <p class="tagline">you only need to take three to win the week.</p>
+  </header>
+
+  <section class="current">
+    <div class="section-label">
+      <span>this week's series</span>
+      <span class="meta" id="opened-date"></span>
+    </div>
+    <div class="games-grid" id="games-grid"></div>
+    <div class="status-line">
+      <div class="status-text" id="status-text">series open</div>
+      <div class="record" id="record"></div>
+    </div>
+    <div class="note-block">
+      <label class="note-label" for="note">week's note (optional)</label>
+      <textarea class="note" id="note" rows="2" placeholder="what's making this week what it is…"></textarea>
+    </div>
+    <div class="actions" id="end-actions">
+      <button class="btn" id="end-btn">close out the week</button>
+    </div>
+  </section>
+
+  <section class="history">
+    <div class="history-header">
+      <span>past series</span>
+      <span class="meta" id="history-count">0 weeks on record</span>
+    </div>
+    <div id="history-body"></div>
+    <div class="clear-zone" id="clear-zone" style="display:none;">
+      <button class="btn ghost" id="clear-btn">clear all history</button>
+    </div>
+  </section>
+
+  <footer class="signoff">
+    three of five.<br/>
+    that's all the week is asking for.
+  </footer>
+</div>
+
+<script>
+  const STORAGE_KEY = 'five_game_series_v1';
+
+  function todayISO() {
+    return new Date().toISOString().slice(0, 10);
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  }
+
+  function emptyWeek() {
+    return { startDate: todayISO(), games: [null, null, null, null, null], note: '' };
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return { currentWeek: emptyWeek(), history: [] };
+  }
+
+  function save(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Could not save:', e);
+    }
+  }
+
+  let data = load();
+  let confirmingEnd = false;
+  let confirmingClear = false;
+
+  function seriesStatus(games) {
+    const wins = games.filter(g => g === 'W').length;
+    const losses = games.filter(g => g === 'L').length;
+    const played = wins + losses;
+    let status;
+    if (wins >= 3) status = 'series won';
+    else if (losses >= 3) status = 'series dropped';
+    else if (played === 0) status = 'series open';
+    else status = 'in progress';
+    return { wins, losses, played, status };
+  }
+
+  function cycleGame(idx) {
+    const games = [...data.currentWeek.games];
+    const cur = games[idx];
+    games[idx] = cur === null ? 'W' : cur === 'W' ? 'L' : null;
+    data.currentWeek.games = games;
+    save(data);
+    render();
+  }
+
+  function setNote(text) {
+    data.currentWeek.note = text;
+    save(data);
+    // No re-render; preserves cursor position.
+  }
+
+  function endWeek() {
+    const { wins, losses, played } = seriesStatus(data.currentWeek.games);
+    if (played === 0) {
+      data.currentWeek = emptyWeek();
+      save(data);
+      confirmingEnd = false;
+      render();
+      return;
+    }
+    let result;
+    if (wins >= 3) result = 'won';
+    else if (losses >= 3) result = 'lost';
+    else if (wins > losses) result = 'won';
+    else if (losses > wins) result = 'lost';
+    else result = 'split';
+
+    const archived = {
+      startDate: data.currentWeek.startDate,
+      endDate: todayISO(),
+      games: data.currentWeek.games,
+      record: wins + '-' + losses,
+      result,
+      note: data.currentWeek.note || '',
+    };
+    data.history = [archived, ...data.history];
+    data.currentWeek = emptyWeek();
+    save(data);
+    confirmingEnd = false;
+    render();
+  }
+
+  function clearAll() {
+    data = { currentWeek: emptyWeek(), history: [] };
+    save(data);
+    confirmingClear = false;
+    render();
+  }
+
+  function render() {
+    document.getElementById('opened-date').textContent =
+      'opened ' + formatDate(data.currentWeek.startDate);
+
+    const grid = document.getElementById('games-grid');
+    grid.innerHTML = '';
+    data.currentWeek.games.forEach((g, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'game-box' + (g === 'W' ? ' win' : g === 'L' ? ' loss' : '');
+      btn.setAttribute('aria-label', 'Game ' + (i + 1) + ': ' +
+        (g === 'W' ? 'win' : g === 'L' ? 'loss' : 'untracked'));
+      btn.innerHTML =
+        '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="mark">' + (g || '·') + '</span>';
+      btn.addEventListener('click', () => cycleGame(i));
+      grid.appendChild(btn);
+    });
+
+    const { wins, losses, played, status } = seriesStatus(data.currentWeek.games);
+    const statusEl = document.getElementById('status-text');
+    statusEl.textContent = status;
+    statusEl.className = 'status-text' +
+      (status === 'series won' ? ' won' : status === 'series dropped' ? ' lost' : '');
+
+    const remaining = 5 - played;
+    document.getElementById('record').innerHTML =
+      wins + '–' + losses +
+      (played < 5 ? ' <span class="remaining">· ' + remaining + ' to play</span>' : '');
+
+    const noteEl = document.getElementById('note');
+    if (document.activeElement !== noteEl) noteEl.value = data.currentWeek.note || '';
+
+    const endActions = document.getElementById('end-actions');
+    endActions.innerHTML = '';
+    if (!confirmingEnd) {
+      const b = document.createElement('button');
+      b.className = 'btn';
+      b.textContent = 'close out the week';
+      b.addEventListener('click', () => { confirmingEnd = true; render(); });
+      endActions.appendChild(b);
+    } else {
+      const yes = document.createElement('button');
+      yes.className = 'btn strong';
+      yes.textContent = 'yes, archive it';
+      yes.addEventListener('click', endWeek);
+      const no = document.createElement('button');
+      no.className = 'btn ghost';
+      no.textContent = 'not yet';
+      no.addEventListener('click', () => { confirmingEnd = false; render(); });
+      endActions.append(yes, no);
+    }
+
+    const histCount = document.getElementById('history-count');
+    histCount.textContent = data.history.length + ' ' +
+      (data.history.length === 1 ? 'week' : 'weeks') + ' on record';
+
+    const histBody = document.getElementById('history-body');
+    histBody.innerHTML = '';
+    if (data.history.length === 0) {
+      const p = document.createElement('p');
+      p.className = 'empty';
+      p.textContent = 'no archived weeks yet — close one out to start the record.';
+      histBody.appendChild(p);
+    } else {
+      const ul = document.createElement('ul');
+      ul.className = 'history-list';
+      data.history.forEach(w => {
+        const li = document.createElement('li');
+        li.className = 'history-row';
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'row-date';
+        dateDiv.textContent = formatDate(w.startDate) + ' – ' + formatDate(w.endDate);
+        const gamesDiv = document.createElement('div');
+        gamesDiv.className = 'row-games';
+        w.games.forEach(g => {
+          const sp = document.createElement('span');
+          sp.className = 'row-game' + (g ? ' ' + g : '');
+          sp.textContent = g || '·';
+          gamesDiv.appendChild(sp);
+        });
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'row-result ' + w.result;
+        resultDiv.textContent = w.record + ' · ' + w.result;
+        li.append(dateDiv, gamesDiv, resultDiv);
+        if (w.note) {
+          const nd = document.createElement('div');
+          nd.className = 'row-note';
+          nd.textContent = '“' + w.note + '”';
+          li.appendChild(nd);
+        }
+        ul.appendChild(li);
+      });
+      histBody.appendChild(ul);
+    }
+
+    const clearZone = document.getElementById('clear-zone');
+    clearZone.style.display = data.history.length > 0 ? 'block' : 'none';
+    clearZone.innerHTML = '';
+    if (!confirmingClear) {
+      const b = document.createElement('button');
+      b.className = 'btn ghost';
+      b.textContent = 'clear all history';
+      b.addEventListener('click', () => { confirmingClear = true; render(); });
+      clearZone.appendChild(b);
+    } else {
+      const yes = document.createElement('button');
+      yes.className = 'btn strong';
+      yes.textContent = 'erase everything';
+      yes.addEventListener('click', clearAll);
+      const no = document.createElement('button');
+      no.className = 'btn ghost';
+      no.textContent = 'cancel';
+      no.addEventListener('click', () => { confirmingClear = false; render(); });
+      clearZone.append(yes, no);
+    }
+  }
+
+  document.getElementById('note').addEventListener('input', e => setNote(e.target.value));
+  render();
+</script>
+</body>
+</html>
