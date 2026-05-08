@@ -6,7 +6,7 @@
 <title>Streaks &amp; Rewards — The Five-Game Series</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
 html {
@@ -32,7 +32,7 @@ body {
   z-index: 0;
 }
 .container {
-  max-width: 640px;
+  max-width: 760px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -158,17 +158,66 @@ section.block { margin-bottom: 2.5rem; }
 .trend-week.won { background: #3a5a3a; color: #f5edd6; border-color: transparent; }
 .trend-week.lost { background: #7a3a2e; color: #f5edd6; border-color: transparent; }
 .trend-week.split { background: #6a5a30; color: #f5edd6; border-color: transparent; }
-.trend-week .record {
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
-.trend-week .week {
-  opacity: 0.75;
-  margin-top: 0.2rem;
-  letter-spacing: 0.02em;
-}
+.trend-week .record { font-weight: 700; font-size: 0.75rem; letter-spacing: 0.05em; }
+.trend-week .week { opacity: 0.75; margin-top: 0.2rem; letter-spacing: 0.02em; }
 .trend-empty {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.55;
+  padding: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* ---- Championship banners ---- */
+.pennants-intro {
+  font-style: italic;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  line-height: 1.5;
+}
+.quarter {
+  margin-bottom: 2.25rem;
+}
+.quarter-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+.string-row {
+  position: relative;
+  width: 100%;
+}
+.string-row svg.full {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.banner-label-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.banner-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  text-align: center;
+  line-height: 1.4;
+}
+.banner-status.won { opacity: 0.85; font-weight: 600; color: #1f1b14; }
+.banner-status.lost { opacity: 0.5; }
+.banner-status.current { opacity: 0.7; font-style: italic; }
+.pennants-empty {
   text-align: center;
   font-style: italic;
   opacity: 0.55;
@@ -273,10 +322,59 @@ section.block { margin-bottom: 2.5rem; }
   letter-spacing: 0.05em;
   opacity: 0.55;
 }
-.badge.earned .status {
-  opacity: 0.75;
-  font-weight: 600;
+.badge.earned .status { opacity: 0.75; font-weight: 600; }
+
+section.backup {
+  margin-top: 3rem;
+  border-top: 1px solid rgba(31,27,20,0.25);
+  padding-top: 1.5rem;
 }
+.backup-note {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  line-height: 1.5;
+  max-width: 28rem;
+  margin: 0 auto 1rem;
+}
+.backup-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+button.btn {
+  background: transparent;
+  border: 1.5px solid #1f1b14;
+  color: #1f1b14;
+  padding: 0.7rem 1.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+button.btn:hover { background: #1f1b14; color: #f5edd6; }
+button.btn.ghost {
+  border: 1.5px dashed rgba(31,27,20,0.4);
+  opacity: 0.7;
+}
+.backup-status {
+  text-align: center;
+  margin-top: 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  min-height: 1em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.backup-status.show { opacity: 0.7; }
+.backup-status.success { color: #3a5a3a; opacity: 1; }
+.backup-status.error { color: #7a3a2e; opacity: 1; }
 
 footer.signoff {
   margin-top: 3rem;
@@ -304,7 +402,6 @@ footer.signoff {
 }
 .signoff-nav a:hover { opacity: 1; }
 
-/* Toast (auto-rollover, same as main page) */
 .toast {
   position: fixed;
   bottom: 1.5rem;
@@ -366,9 +463,25 @@ footer.signoff {
 </section>
 
 <section class="block">
+  <div class="section-label"><span>monthly banners</span></div>
+  <p class="pennants-intro">a banner goes up for every month you took more weeks than you dropped.</p>
+  <div id="pennants-slot"></div>
+</section>
+
+<section class="block">
   <div class="section-label"><span>rewards</span></div>
   <div id="next-up-slot"></div>
   <div class="badge-grid" id="badge-grid"></div>
+</section>
+
+<section class="backup">
+<p class="backup-note">your progress is saved on this device only. download a backup anytime — keep it safe in case you switch browsers, clear your data, or just want peace of mind.</p>
+<div class="backup-actions">
+<button class="btn" id="export-btn">download backup</button>
+<button class="btn ghost" id="import-btn">restore from file</button>
+<input type="file" id="import-file" accept="application/json,.json" style="display:none">
+</div>
+<div class="backup-status" id="backup-status"></div>
 </section>
 
 <footer class="signoff">
@@ -380,6 +493,194 @@ that's how the wins stack.
 
 <script>
 const STORAGE_KEY = 'five_game_series_v1';
+const MONTH_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_SHORT = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+// One palette per quarter
+const QUARTER_COLORS = [
+  { bg: '#7a3a2e', border: '#f5edd6', accent: '#e8c976', text: '#f5edd6' }, // Q1: rust
+  { bg: '#3a5a3a', border: '#f5edd6', accent: '#e8c976', text: '#f5edd6' }, // Q2: forest
+  { bg: '#2c4a4a', border: '#f5edd6', accent: '#e8c976', text: '#f5edd6' }, // Q3: teal
+  { bg: '#2c3a5a', border: '#f5edd6', accent: '#e8c976', text: '#f5edd6' }, // Q4: navy
+];
+const MUTED_COLORS = { bg: '#d9d2bb', border: '#bcb59e', accent: '#9c9580', text: '#7a7460' };
+
+const ICONS = {
+  jan: `
+    <path d="M 35 92 Q 60 86 90 90 Q 120 94 150 89 Q 180 86 215 91" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 60 75 L 50 88 L 70 88 Z M 60 65 L 52 78 L 68 78 Z M 60 56 L 54 68 L 66 68 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <line x1="60" y1="88" x2="60" y2="92" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M 100 88 L 100 70 L 120 56 L 140 70 L 140 88 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <rect x="115" y="76" width="10" height="12" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <rect x="130" y="58" width="5" height="10" fill="none" stroke="currentColor" stroke-width="1.3"/>
+    <path d="M 132 56 Q 136 50 132 44 Q 128 38 134 32 Q 139 26 135 20" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <circle cx="170" cy="35" r="1.2" fill="currentColor"/>
+    <circle cx="185" cy="50" r="1.2" fill="currentColor"/>
+    <circle cx="195" cy="30" r="1.2" fill="currentColor"/>
+    <circle cx="80" cy="40" r="1.2" fill="currentColor"/>
+    <circle cx="160" cy="65" r="1.2" fill="currentColor"/>
+  `,
+  feb: `
+    <path d="M 50 90 Q 90 75 130 70 Q 170 66 210 62" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M 80 82 L 75 72 M 80 82 L 88 74" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M 130 70 L 125 60 M 130 70 L 138 62" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M 175 64 L 172 55 M 175 64 L 183 57" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M 105 55 C 102 52, 96 52, 96 58 C 96 62, 105 68, 105 68 C 105 68, 114 62, 114 58 C 114 52, 108 52, 105 55 Z" fill="currentColor"/>
+    <path d="M 155 48 C 153 46, 149 46, 149 50 C 149 53, 155 58, 155 58 C 155 58, 161 53, 161 50 C 161 46, 157 46, 155 48 Z" fill="currentColor" opacity="0.7"/>
+    <path d="M 195 50 C 193 48, 189 48, 189 52 C 189 55, 195 60, 195 60 C 195 60, 201 55, 201 52 C 201 48, 197 48, 195 50 Z" fill="currentColor"/>
+  `,
+  mar: `
+    <line x1="40" y1="92" x2="220" y2="92" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 160 38 Q 150 38 150 48 Q 142 48 142 56 Q 142 64 152 64 L 195 64 Q 205 64 205 54 Q 205 46 198 46 Q 198 36 188 36 Q 178 32 170 38 Q 165 36 160 38 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M 160 70 L 158 78 M 175 70 L 173 80 M 190 70 L 188 78" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 80 92 Q 80 75 80 60" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M 80 78 Q 70 76 65 84" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 80 72 Q 92 70 96 78" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 72 60 Q 72 48 80 44 Q 88 48 88 60 Q 88 64 84 64 L 76 64 Q 72 64 72 60 Z" fill="currentColor"/>
+  `,
+  apr: `
+    <path d="M 70 28 L 68 36 M 90 25 L 88 33 M 145 28 L 143 36 M 175 24 L 173 32 M 200 30 L 198 38" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 80 65 Q 80 45 125 42 Q 170 45 170 65 Z" fill="currentColor"/>
+    <path d="M 95 65 Q 100 50 110 45 M 125 65 L 125 42 M 155 65 Q 150 50 140 45" fill="none" stroke="#1f1b14" stroke-width="0.8" opacity="0.35"/>
+    <line x1="125" y1="65" x2="125" y2="86" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M 125 86 Q 125 92 119 92 Q 115 92 115 88" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M 60 88 L 58 95 M 195 88 L 193 95" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+  `,
+  may: `
+    <circle cx="160" cy="55" r="14" fill="currentColor"/>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="160" y1="32" x2="160" y2="38"/>
+      <line x1="178" y1="40" x2="174" y2="44"/>
+      <line x1="186" y1="55" x2="180" y2="55"/>
+      <line x1="142" y1="40" x2="146" y2="44"/>
+      <line x1="134" y1="55" x2="140" y2="55"/>
+    </g>
+    <path d="M 30 88 Q 70 70 110 78 Q 145 84 180 72 Q 210 64 230 80 L 230 96 L 30 96 Z" fill="currentColor" opacity="0.85"/>
+    <line x1="65" y1="92" x2="65" y2="78" stroke="#1f1b14" stroke-width="1.2" opacity="0.4"/>
+    <g transform="translate(65 73)">
+      <circle r="2.2" fill="#1f1b14" opacity="0.5"/>
+      <ellipse cx="0" cy="-5" rx="1.5" ry="3" fill="#1f1b14" opacity="0.45"/>
+      <ellipse cx="5" cy="0" rx="3" ry="1.5" fill="#1f1b14" opacity="0.45"/>
+      <ellipse cx="0" cy="5" rx="1.5" ry="3" fill="#1f1b14" opacity="0.45"/>
+      <ellipse cx="-5" cy="0" rx="3" ry="1.5" fill="#1f1b14" opacity="0.45"/>
+    </g>
+  `,
+  jun: `
+    <circle cx="195" cy="38" r="9" fill="currentColor"/>
+    <path d="M 110 75 L 110 35 L 145 75 Z" fill="currentColor"/>
+    <path d="M 110 75 L 110 42 L 92 75 Z" fill="currentColor" opacity="0.75"/>
+    <line x1="110" y1="35" x2="110" y2="80" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M 80 75 Q 110 86 145 75 L 138 82 Q 110 88 88 82 Z" fill="currentColor"/>
+    <path d="M 30 90 Q 50 86 70 90 Q 90 94 110 90 Q 130 86 150 90 Q 170 94 190 90 Q 210 86 225 90" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 40 95 Q 60 92 80 95 Q 100 98 120 95 Q 140 92 160 95 Q 180 98 200 95" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
+  `,
+  jul: `
+    <line x1="30" y1="92" x2="220" y2="92" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <g stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="none">
+      <path d="M 55 92 L 55 78 M 47 80 L 55 60 L 63 80 Z M 49 65 L 55 48 L 61 65 Z M 51 50 L 55 35 L 59 50 Z M 53 38 L 55 28 L 57 38 Z"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" fill="none">
+      <path d="M 195 92 L 195 76 M 185 78 L 195 56 L 205 78 Z M 187 60 L 195 42 L 203 60 Z M 189 45 L 195 28 L 201 45 Z M 191 32 L 195 22 L 199 32 Z"/>
+    </g>
+    <g stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none" opacity="0.85">
+      <path d="M 170 92 L 170 80 M 163 82 L 170 66 L 177 82 Z M 165 70 L 170 56 L 175 70 Z M 167 58 L 170 48 L 173 58 Z"/>
+    </g>
+    <path d="M 90 92 L 130 50 L 170 92 Z" fill="currentColor"/>
+    <path d="M 125 92 L 130 64 L 135 92 Z" fill="#1f1b14" opacity="0.45"/>
+    <line x1="130" y1="50" x2="130" y2="64" stroke="#1f1b14" stroke-width="0.8" opacity="0.3"/>
+    <line x1="90" y1="92" x2="78" y2="92" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+    <line x1="170" y1="92" x2="182" y2="92" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+    <line x1="130" y1="50" x2="130" y2="46" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M 215 30 A 6 6 0 1 0 218 38 A 4.5 4.5 0 1 1 215 30 Z" fill="currentColor"/>
+    <circle cx="85" cy="32" r="1.1" fill="currentColor"/>
+    <circle cx="105" cy="22" r="1.1" fill="currentColor"/>
+    <circle cx="155" cy="20" r="1.1" fill="currentColor"/>
+    <circle cx="38" cy="38" r="1" fill="currentColor"/>
+  `,
+  aug: `
+    <circle cx="155" cy="55" r="12" fill="currentColor" opacity="0.55"/>
+    <path d="M 50 90 L 110 50 L 170 90 Z" fill="currentColor" opacity="0.7"/>
+    <path d="M 100 58 L 110 50 L 120 58 L 116 62 L 110 58 L 104 62 Z" fill="#1f1b14" opacity="0.25"/>
+    <path d="M 130 90 L 180 40 L 230 90 Z" fill="currentColor"/>
+    <path d="M 168 50 L 180 40 L 192 50 L 187 56 L 180 50 L 173 56 Z" fill="#1f1b14" opacity="0.3"/>
+    <line x1="30" y1="92" x2="232" y2="92" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M 75 35 Q 80 30 85 35 Q 90 30 95 35" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+  `,
+  sep: `
+    <line x1="35" y1="92" x2="220" y2="92" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <g transform="translate(110 50) rotate(-15)">
+      <path d="M 0 -22 Q 8 -20 9 -14 Q 14 -12 13 -6 Q 18 -4 16 2 Q 19 6 14 10 Q 16 16 8 18 Q 4 22 0 22 Q -4 22 -8 18 Q -16 16 -14 10 Q -19 6 -16 2 Q -18 -4 -13 -6 Q -14 -12 -9 -14 Q -8 -20 0 -22 Z" fill="currentColor"/>
+      <line x1="0" y1="-22" x2="0" y2="22" stroke="#1f1b14" stroke-width="0.8" opacity="0.35"/>
+    </g>
+    <path d="M 145 35 Q 150 38 145 42" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M 80 70 Q 85 73 80 77" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <g transform="translate(180 78)">
+      <ellipse cx="0" cy="0" rx="8" ry="11" fill="currentColor"/>
+      <path d="M -8 -3 Q -8 -10 0 -10 Q 8 -10 8 -3 Z" fill="#1f1b14" opacity="0.4"/>
+      <line x1="0" y1="-12" x2="0" y2="-15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+  `,
+  oct: `
+    <line x1="30" y1="92" x2="220" y2="92" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 118 32 Q 122 26 118 20 Q 114 14 118 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 130 32 Q 134 26 130 20 Q 126 14 130 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 142 32 Q 146 26 142 20 Q 138 14 142 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 108 38 L 110 80 Q 110 84 114 84 L 146 84 Q 150 84 150 80 L 152 38 Z" fill="currentColor"/>
+    <ellipse cx="130" cy="38" rx="22" ry="4" fill="#1f1b14" opacity="0.35"/>
+    <ellipse cx="130" cy="38" rx="18" ry="2.5" fill="#1f1b14" opacity="0.55"/>
+    <path d="M 152 48 Q 165 48 165 58 Q 165 68 152 68" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+    <g transform="translate(75 35) rotate(-30)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(70 50) rotate(20)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+    <g transform="translate(78 75) rotate(60)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(110 90) rotate(110)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+    <g transform="translate(175 86) rotate(-110)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(190 70) rotate(-60)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+    <g transform="translate(195 50) rotate(-20)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(190 32) rotate(20)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+    <g transform="translate(165 22) rotate(60)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(140 18) rotate(100)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+    <g transform="translate(115 22) rotate(140)"><path d="M 0 0 Q 6 -4 10 0 Q 12 5 8 8 Q 2 8 0 0 Z" fill="currentColor"/></g>
+    <g transform="translate(95 28) rotate(-160)"><path d="M 0 0 Q 5 -5 11 -2 Q 13 4 7 7 Q 1 6 0 0 Z" fill="currentColor" opacity="0.85"/></g>
+  `,
+  nov: `
+    <line x1="35" y1="92" x2="220" y2="92" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none">
+      <path d="M 110 92 Q 100 70 92 40"/>
+      <path d="M 125 92 L 125 36"/>
+      <path d="M 140 92 Q 150 70 158 40"/>
+    </g>
+    <g fill="currentColor" stroke="currentColor" stroke-width="0.8" transform="translate(92 42) rotate(-20)">
+      <ellipse cx="0" cy="0" rx="2" ry="4"/><ellipse cx="-3" cy="6" rx="2" ry="4"/><ellipse cx="3" cy="6" rx="2" ry="4"/><ellipse cx="-3" cy="14" rx="2" ry="4"/><ellipse cx="3" cy="14" rx="2" ry="4"/>
+    </g>
+    <g fill="currentColor" stroke="currentColor" stroke-width="0.8" transform="translate(125 36)">
+      <ellipse cx="0" cy="0" rx="2" ry="4"/><ellipse cx="-3" cy="6" rx="2" ry="4"/><ellipse cx="3" cy="6" rx="2" ry="4"/><ellipse cx="-3" cy="14" rx="2" ry="4"/><ellipse cx="3" cy="14" rx="2" ry="4"/><ellipse cx="0" cy="20" rx="2" ry="4"/>
+    </g>
+    <g fill="currentColor" stroke="currentColor" stroke-width="0.8" transform="translate(158 42) rotate(20)">
+      <ellipse cx="0" cy="0" rx="2" ry="4"/><ellipse cx="-3" cy="6" rx="2" ry="4"/><ellipse cx="3" cy="6" rx="2" ry="4"/><ellipse cx="-3" cy="14" rx="2" ry="4"/><ellipse cx="3" cy="14" rx="2" ry="4"/>
+    </g>
+    <ellipse cx="125" cy="78" rx="20" ry="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+  `,
+  dec: `
+    <g transform="translate(195 35)" fill="currentColor">
+      <path d="M 0 -8 L 2 -2 L 8 -2 L 3 1 L 5 8 L 0 4 L -5 8 L -3 1 L -8 -2 L -2 -2 Z"/>
+    </g>
+    <circle cx="50" cy="40" r="1.3" fill="currentColor"/>
+    <circle cx="180" cy="80" r="1.3" fill="currentColor"/>
+    <circle cx="115" cy="60" r="26" fill="none" stroke="currentColor" stroke-width="6"/>
+    <g stroke="#1f1b14" stroke-width="1" stroke-linecap="round" opacity="0.35">
+      <line x1="115" y1="32" x2="115" y2="38"/><line x1="115" y1="82" x2="115" y2="88"/><line x1="87" y1="60" x2="93" y2="60"/><line x1="137" y1="60" x2="143" y2="60"/>
+    </g>
+    <circle cx="100" cy="48" r="2" fill="currentColor"/>
+    <circle cx="132" cy="50" r="2" fill="currentColor"/>
+    <circle cx="105" cy="76" r="2" fill="currentColor"/>
+    <g transform="translate(115 86)">
+      <path d="M -10 0 Q -16 -4 -16 4 Q -10 8 0 4 Q 10 8 16 4 Q 16 -4 10 0 Q 0 -4 -10 0 Z" fill="currentColor"/>
+      <rect x="-3" y="-2" width="6" height="6" fill="#1f1b14" opacity="0.3"/>
+      <path d="M -3 4 L -7 12 M 3 4 L 7 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  `,
+};
+const ICON_KEYS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
 
 function dateToISO(d) {
   const y = d.getFullYear();
@@ -413,11 +714,7 @@ function formatWeekRange(startISO) {
     end.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 function emptyWeek() {
-  return {
-    startDate: dateToISO(getMondayOfWeek()),
-    games: [null, null, null, null, null],
-    note: ''
-  };
+  return { startDate: dateToISO(getMondayOfWeek()), games: [null, null, null, null, null], note: '' };
 }
 function load() {
   try {
@@ -427,8 +724,7 @@ function load() {
   return { currentWeek: emptyWeek(), history: [] };
 }
 function save(d) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-  catch (e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {}
 }
 function seriesStatus(games) {
   const wins = games.filter(g => g === 'W').length;
@@ -449,9 +745,7 @@ function archiveWeek(week, autoArchived) {
     endDate: dateToISO(getDayDate(week.startDate, 4)),
     games: week.games,
     record: wins + '-' + losses,
-    result,
-    note: week.note || '',
-    autoArchived: !!autoArchived,
+    result, note: week.note || '', autoArchived: !!autoArchived,
   };
 }
 function checkRollover(d) {
@@ -474,8 +768,7 @@ function showToast(archived) {
                archived.result === 'lost' ? 'dropped' : 'split';
   const t = document.createElement('div');
   t.className = 'toast toast-' + archived.result;
-  t.innerHTML =
-    '<div class="toast-label">last week archived</div>' +
+  t.innerHTML = '<div class="toast-label">last week archived</div>' +
     '<div class="toast-detail">' + archived.record + ' &middot; series ' + verb + '</div>';
   t.addEventListener('click', () => {
     t.classList.add('toast-leaving');
@@ -489,235 +782,465 @@ function showToast(archived) {
   }, 5500);
 }
 
-// ---- Bootstrap ----
-const data = load();
+let data = load();
 const rolledOver = checkRollover(data);
-const history = data.history || [];
 
-// ---- Compute stats ----
-const totalWeeks = history.length;
-const totalTaken = history.filter(w => w.result === 'won').length;
-const totalDropped = history.filter(w => w.result === 'lost').length;
-const totalSplit = history.filter(w => w.result === 'split').length;
-const takeRate = totalWeeks > 0 ? Math.round((totalTaken / totalWeeks) * 100) : 0;
-
-let currentStreak = 0;
-for (const w of history) {
-  if (w.result === 'won') currentStreak++;
-  else break;
-}
-let bestStreak = 0, run = 0;
-for (const w of history) {
-  if (w.result === 'won') { run++; bestStreak = Math.max(bestStreak, run); }
-  else run = 0;
-}
-
-const last10 = history.slice(0, 10);
-const last10Taken = last10.filter(w => w.result === 'won').length;
-
-// ---- Render Overview ----
-document.getElementById('overview-grid').innerHTML = `
-  <div class="stat-card">
-    <div class="label">weeks tracked</div>
-    <div class="value">${totalWeeks}</div>
-    <div class="sub">${totalTaken} taken &middot; ${totalDropped} dropped${totalSplit ? ' &middot; ' + totalSplit + ' split' : ''}</div>
-  </div>
-  <div class="stat-card">
-    <div class="label">take rate</div>
-    <div class="value">${takeRate}%</div>
-    <div class="sub">${totalWeeks === 0 ? 'nothing yet' : 'all time'}</div>
-  </div>
-  <div class="stat-card">
-    <div class="label">last 10</div>
-    <div class="value">${last10Taken}<span style="opacity:0.4;font-size:1.5rem">/${Math.max(1, last10.length)}</span></div>
-    <div class="sub">${last10.length === 0 ? 'nothing yet' : 'series taken'}</div>
-  </div>
-`;
-
-// ---- Render Streaks ----
-document.getElementById('streak-grid').innerHTML = `
-  <div class="stat-card">
-    <div class="label">current streak</div>
-    <div class="value">${currentStreak}</div>
-    <div class="sub">${currentStreak === 0 ? 'next one starts the streak' : 'series taken in a row'}</div>
-  </div>
-  <div class="stat-card">
-    <div class="label">best streak</div>
-    <div class="value">${bestStreak}</div>
-    <div class="sub">${bestStreak === 0 ? 'not yet' : 'consecutive wins'}</div>
-  </div>
-`;
-
-// ---- Render Recent Weeks Trend ----
-const trendSlot = document.getElementById('trend-slot');
-const trendWeeks = history.slice(0, 12).reverse(); // oldest first, left to right
-if (trendWeeks.length === 0) {
-  trendSlot.innerHTML = '<div class="trend-empty">no weeks logged yet — close one out and it shows up here.</div>';
-} else {
-  trendSlot.innerHTML = '<div class="trend-grid">' + trendWeeks.map(w => `
-    <div class="trend-week ${w.result}" title="${formatWeekRange(w.startDate)} — ${w.record} (${w.result})">
-      <span class="record">${w.record}</span>
-      <span class="week">${formatDate(w.startDate)}</span>
-    </div>
-  `).join('') + '</div>';
-}
-
-// ---- Define Rewards ----
-function findFirstWonWeek() {
-  for (let i = history.length - 1; i >= 0; i--) {
-    if (history[i].result === 'won') return history[i];
-  }
-  return null;
-}
-function findThreeInARow() {
-  // history is most-recent first; the END of the streak (latest week of the trio) sits at the lowest i
-  for (let i = 0; i <= history.length - 3; i++) {
-    if (history[i].result === 'won' && history[i+1].result === 'won' && history[i+2].result === 'won') {
-      return history[i];
+// ---- Monthly buckets ----
+function buildMonthlyBuckets(history) {
+  const buckets = {};
+  for (const w of history) {
+    const end = new Date(w.endDate + 'T00:00:00');
+    const key = end.getFullYear() + '-' + String(end.getMonth() + 1).padStart(2, '0');
+    if (!buckets[key]) {
+      buckets[key] = { key, year: end.getFullYear(), monthIndex: end.getMonth(), won: 0, lost: 0, split: 0 };
     }
+    if (w.result === 'won') buckets[key].won++;
+    else if (w.result === 'lost') buckets[key].lost++;
+    else buckets[key].split++;
   }
-  return null;
-}
-function findHardWon() {
-  for (let i = history.length - 1; i >= 0; i--) {
-    if (history[i].record === '3-2' && history[i].result === 'won') return history[i];
-  }
-  return null;
-}
-function findBounceBack() {
-  // Walk oldest-to-newest looking for a 'lost' immediately followed by 'won'
-  for (let i = history.length - 1; i >= 1; i--) {
-    if (history[i].result === 'lost' && history[i-1].result === 'won') {
-      return history[i-1];
-    }
-  }
-  return null;
-}
-function findTenthWeek() {
-  if (totalWeeks < 10) return null;
-  // 10th week chronologically = 10th from the end of history (which is most-recent first)
-  return history[history.length - 10];
-}
-function findTenthWon() {
-  if (totalTaken < 10) return null;
-  const wonOldestFirst = history.filter(w => w.result === 'won').reverse();
-  return wonOldestFirst[9] || null;
+  return buckets;
 }
 
-const rewards = [
-  {
-    id: 'first',
-    symbol: 'I',
-    name: 'First Series',
-    desc: 'Take your first series.',
-    earned: totalTaken >= 1,
-    earnedDate: () => { const w = findFirstWonWeek(); return w ? w.endDate : null; },
-    progress: () => Math.min(totalTaken, 1) + '/1',
-  },
-  {
-    id: 'tens',
-    symbol: '10',
-    name: 'Tens',
-    desc: 'Track ten weeks.',
-    earned: totalWeeks >= 10,
-    earnedDate: () => { const w = findTenthWeek(); return w ? w.endDate : null; },
-    progress: () => Math.min(totalWeeks, 10) + '/10',
-  },
-  {
-    id: 'three-peat',
-    symbol: 'III',
-    name: 'Three-Peat',
-    desc: 'Three series taken in a row.',
-    earned: bestStreak >= 3,
-    earnedDate: () => { const w = findThreeInARow(); return w ? w.endDate : null; },
-    progress: () => Math.min(currentStreak, 3) + '/3',
-  },
-  {
-    id: 'hard-won',
-    symbol: '3·2',
-    name: 'Hard Won',
-    desc: 'Take a series 3-2.',
-    earned: !!findHardWon(),
-    earnedDate: () => { const w = findHardWon(); return w ? w.endDate : null; },
-    progress: () => null,
-  },
-  {
-    id: 'bounce-back',
-    symbol: '↻',
-    name: 'Bounce Back',
-    desc: 'Take a series the week after dropping one.',
-    earned: !!findBounceBack(),
-    earnedDate: () => { const w = findBounceBack(); return w ? w.endDate : null; },
-    progress: () => null,
-  },
-  {
-    id: 'veteran',
-    symbol: 'X',
-    name: 'Veteran',
-    desc: 'Take ten series.',
-    earned: totalTaken >= 10,
-    earnedDate: () => { const w = findTenthWon(); return w ? w.endDate : null; },
-    progress: () => Math.min(totalTaken, 10) + '/10',
-  },
-];
+function buildMonthList(buckets) {
+  const keys = Object.keys(buckets).sort();
+  if (keys.length === 0) return [];
+  const [firstY, firstM] = keys[0].split('-').map(Number);
+  const today = new Date();
+  const lastY = today.getFullYear();
+  const lastM = today.getMonth() + 1;
 
-// ---- Next Up callout ----
-function findNextUp() {
-  const unearned = rewards.filter(r => !r.earned);
-  if (unearned.length === 0) return null;
-  let best = null, bestGap = Infinity;
-  for (const r of unearned) {
-    const p = r.progress ? r.progress() : null;
-    if (!p) continue;
-    const m = p.match(/^(\d+)\/(\d+)$/);
-    if (!m) continue;
-    const gap = (+m[2]) - (+m[1]);
-    if (gap < bestGap) { bestGap = gap; best = r; }
+  const months = [];
+  let y = firstY, m = firstM;
+  while (y < lastY || (y === lastY && m <= lastM)) {
+    const key = y + '-' + String(m).padStart(2, '0');
+    const bucket = buckets[key] || { key, year: y, monthIndex: m - 1, won: 0, lost: 0, split: 0 };
+    months.push(bucket);
+    m++;
+    if (m > 12) { m = 1; y++; }
   }
-  // Fall back to first unearned without numeric progress
-  return best || unearned[0];
+  return months;
 }
 
-const nextSlot = document.getElementById('next-up-slot');
-const next = findNextUp();
-if (next && totalWeeks > 0) {
-  const detail = next.progress && next.progress()
-    ? next.progress() + ' &middot; ' + next.desc.toLowerCase()
-    : next.desc.toLowerCase();
-  nextSlot.innerHTML = `
-    <div class="next-up">
-      <div class="label">next up</div>
-      <div class="name">${next.name}</div>
-      <div class="progress">${detail}</div>
-    </div>
-  `;
-} else if (totalWeeks === 0) {
-  nextSlot.innerHTML = `
-    <div class="next-up">
-      <div class="label">first up</div>
-      <div class="name">First Series</div>
-      <div class="progress">close out a winning week to start the record</div>
-    </div>
-  `;
-}
+// ---- Banner SVG generator ----
+function bannerSVGFragment(monthIndex, won, isCurrent, palette, xOffset) {
+  const colors = (won && !isCurrent) ? palette : MUTED_COLORS;
+  const monthShort = MONTH_SHORT[monthIndex];
+  const iconKey = ICON_KEYS[monthIndex];
+  const opacity = (won && !isCurrent) ? 1 : 0.85;
 
-// ---- Render Rewards Grid ----
-document.getElementById('badge-grid').innerHTML = rewards.map(r => {
-  const status = r.earned
-    ? (r.earnedDate() ? 'earned ' + formatDate(r.earnedDate()) : 'earned')
-    : (r.progress && r.progress() ? r.progress() : 'not yet');
+  const bannerPath = `M 5 5 L 235 5 L 235 230 L 120 295 L 5 230 Z`;
+  const innerPath = `M 18 18 L 222 18 L 222 222 L 120 280 L 18 222 Z`;
+
   return `
-    <div class="badge ${r.earned ? 'earned' : ''}">
-      <div class="symbol">${r.symbol}</div>
-      <div class="name">${r.name}</div>
-      <div class="desc">${r.desc}</div>
-      <div class="status">${status}</div>
+  <g transform="translate(${xOffset} 0)" opacity="${opacity}">
+    <path d="${bannerPath}" fill="rgba(31,27,20,0.18)" transform="translate(2 4)"/>
+    <path d="${bannerPath}" fill="${colors.border}"/>
+    <path d="${innerPath}" fill="${colors.bg}"/>
+    <circle cx="22" cy="22" r="5" fill="#1f1b14"/>
+    <circle cx="22" cy="22" r="3.5" fill="${colors.accent}"/>
+    <circle cx="22" cy="22" r="1.5" fill="#1f1b14" opacity="0.5"/>
+    <circle cx="218" cy="22" r="5" fill="#1f1b14"/>
+    <circle cx="218" cy="22" r="3.5" fill="${colors.accent}"/>
+    <circle cx="218" cy="22" r="1.5" fill="#1f1b14" opacity="0.5"/>
+    <text x="120" y="105" font-family="'Bebas Neue', 'Arial Narrow', sans-serif"
+          font-weight="700" font-size="64" fill="${colors.text}"
+          text-anchor="middle" letter-spacing="3">${monthShort}</text>
+    <line x1="80" y1="125" x2="160" y2="125" stroke="${colors.accent}" stroke-width="1.5" opacity="0.7"/>
+    <g style="color: ${colors.accent}" transform="translate(5 145) scale(0.92)">
+      ${ICONS[iconKey]}
+    </g>
+  </g>`;
+}
+
+function renderQuarterRow(monthsInQuarter, palette) {
+  const bannerWidth = 240;
+  const gap = 50;
+  const sideMargin = 30;
+  const totalWidth = sideMargin * 2 + bannerWidth * 3 + gap * 2;
+  const totalHeight = 350;
+
+  const grommets = [];
+  for (let i = 0; i < 3; i++) {
+    const offset = sideMargin + i * (bannerWidth + gap);
+    grommets.push({ x: offset + 22, y: 32 });
+    grommets.push({ x: offset + 218, y: 32 });
+  }
+
+  let stringPath = `M -10 28 Q ${grommets[0].x - 30} 50 ${grommets[0].x} ${grommets[0].y}`;
+  for (let i = 1; i < grommets.length; i++) {
+    const prev = grommets[i - 1];
+    const cur = grommets[i];
+    const midX = (prev.x + cur.x) / 2;
+    const sag = Math.min(20, (cur.x - prev.x) * 0.15);
+    stringPath += ` Q ${midX} ${prev.y + sag} ${cur.x} ${cur.y}`;
+  }
+  stringPath += ` Q ${grommets[grommets.length - 1].x + 30} 50 ${totalWidth + 10} 28`;
+
+  const bannerFragments = monthsInQuarter.map((mb, i) => {
+    const offset = sideMargin + i * (bannerWidth + gap);
+    const won = mb.won > mb.lost;
+    return bannerSVGFragment(mb.monthIndex, won, mb.isCurrent, palette, offset);
+  }).join('');
+
+  return `
+<svg viewBox="0 0 ${totalWidth} ${totalHeight}" xmlns="http://www.w3.org/2000/svg" class="full" preserveAspectRatio="xMidYMid meet">
+  <path d="${stringPath}" fill="none" stroke="#3a2a1c" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="${stringPath}" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.8" stroke-linecap="round" transform="translate(0 -0.7)"/>
+  ${bannerFragments}
+</svg>`;
+}
+
+function renderBanners() {
+  const slot = document.getElementById('pennants-slot');
+  const buckets = buildMonthlyBuckets(data.history || []);
+
+  if (Object.keys(buckets).length === 0) {
+    slot.innerHTML = '<div class="pennants-empty">no months on record yet — close out some weeks and the banners roll in.</div>';
+    return;
+  }
+
+  const months = buildMonthList(buckets);
+  const today = new Date();
+  const currentKey = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0');
+
+  // Group by quarter, but only render quarters that contain at least one tracked month.
+  // Each quarter row always shows all 3 of its months for visual completeness; if one
+  // is empty (zero tracked weeks), it appears as a muted banner with "0–0".
+  const quarters = [[], [], [], []];
+  for (const m of months) {
+    const q = Math.floor(m.monthIndex / 3);
+    quarters[q].push({ ...m, isCurrent: m.key === currentKey });
+  }
+
+  // Fill out each quarter that has at least one month with placeholders for the
+  // missing months, so we always show a full row of 3.
+  const allMonthsByKey = {};
+  for (const m of months) allMonthsByKey[m.key] = m;
+
+  let html = '';
+  for (let q = 0; q < 4; q++) {
+    if (quarters[q].length === 0) continue;
+    // Build all 3 months in this quarter (using existing data or placeholder)
+    const fullQuarter = [];
+    for (let i = 0; i < 3; i++) {
+      const monthIndex = q * 3 + i;
+      // We need a year — use the year of any existing month in this quarter,
+      // or fall back to current year.
+      const existing = quarters[q].find(m => m.monthIndex === monthIndex);
+      if (existing) {
+        fullQuarter.push(existing);
+      } else {
+        const yearGuess = quarters[q][0].year;
+        fullQuarter.push({
+          monthIndex, year: yearGuess, won: 0, lost: 0, split: 0,
+          isCurrent: false, key: yearGuess + '-' + String(monthIndex + 1).padStart(2, '0')
+        });
+      }
+    }
+
+    const palette = QUARTER_COLORS[q];
+    const quarterName = ['Q1', 'Q2', 'Q3', 'Q4'][q];
+    const range = MONTH_FULL[q*3].slice(0,3) + ' – ' + MONTH_FULL[q*3+2].slice(0,3);
+
+    html += `<div class="quarter">
+      <div class="quarter-label">${quarterName} &middot; ${range}</div>
+      <div class="string-row">${renderQuarterRow(fullQuarter, palette)}</div>
+      <div class="banner-label-row">
+        ${fullQuarter.map(m => {
+          let cls, txt;
+          if (m.isCurrent) {
+            cls = 'current';
+            txt = (m.won + m.lost === 0) ? 'this month, in progress' : (m.won + '–' + m.lost + ' so far');
+          } else if (m.won > m.lost) {
+            cls = 'won';
+            txt = m.won + '–' + m.lost + ' · taken';
+          } else if (m.won + m.lost === 0) {
+            cls = 'lost';
+            txt = 'no weeks';
+          } else {
+            cls = 'lost';
+            txt = m.won + '–' + m.lost + ' · close';
+          }
+          return `<div class="banner-status ${cls}">${MONTH_SHORT[m.monthIndex]} '${String(m.year).slice(-2)} &middot; ${txt}</div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }
+  slot.innerHTML = html;
+}
+
+function renderAll() {
+  const history = data.history || [];
+  const totalWeeks = history.length;
+  const totalTaken = history.filter(w => w.result === 'won').length;
+  const totalDropped = history.filter(w => w.result === 'lost').length;
+  const totalSplit = history.filter(w => w.result === 'split').length;
+  const takeRate = totalWeeks > 0 ? Math.round((totalTaken / totalWeeks) * 100) : 0;
+
+  let currentStreak = 0;
+  for (const w of history) {
+    if (w.result === 'won') currentStreak++; else break;
+  }
+  let bestStreak = 0, run = 0;
+  for (const w of history) {
+    if (w.result === 'won') { run++; bestStreak = Math.max(bestStreak, run); }
+    else run = 0;
+  }
+  const last10 = history.slice(0, 10);
+  const last10Taken = last10.filter(w => w.result === 'won').length;
+
+  document.getElementById('overview-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="label">weeks tracked</div>
+      <div class="value">${totalWeeks}</div>
+      <div class="sub">${totalTaken} taken &middot; ${totalDropped} dropped${totalSplit ? ' &middot; ' + totalSplit + ' split' : ''}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">take rate</div>
+      <div class="value">${takeRate}%</div>
+      <div class="sub">${totalWeeks === 0 ? 'nothing yet' : 'all time'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">last 10</div>
+      <div class="value">${last10Taken}<span style="opacity:0.4;font-size:1.5rem">/${Math.max(1, last10.length)}</span></div>
+      <div class="sub">${last10.length === 0 ? 'nothing yet' : 'series taken'}</div>
     </div>
   `;
-}).join('');
+  document.getElementById('streak-grid').innerHTML = `
+    <div class="stat-card">
+      <div class="label">current streak</div>
+      <div class="value">${currentStreak}</div>
+      <div class="sub">${currentStreak === 0 ? 'next one starts the streak' : 'series taken in a row'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">best streak</div>
+      <div class="value">${bestStreak}</div>
+      <div class="sub">${bestStreak === 0 ? 'not yet' : 'consecutive wins'}</div>
+    </div>
+  `;
 
+  const trendSlot = document.getElementById('trend-slot');
+  const trendWeeks = history.slice(0, 12).reverse();
+  if (trendWeeks.length === 0) {
+    trendSlot.innerHTML = '<div class="trend-empty">no weeks logged yet — close one out and it shows up here.</div>';
+  } else {
+    trendSlot.innerHTML = '<div class="trend-grid">' + trendWeeks.map(w => `
+      <div class="trend-week ${w.result}" title="${formatWeekRange(w.startDate)} — ${w.record} (${w.result})">
+        <span class="record">${w.record}</span>
+        <span class="week">${formatDate(w.startDate)}</span>
+      </div>
+    `).join('') + '</div>';
+  }
+
+  renderBanners();
+
+  function findFirstWonWeek() {
+    for (let i = history.length - 1; i >= 0; i--)
+      if (history[i].result === 'won') return history[i];
+    return null;
+  }
+  function findThreeInARow() {
+    for (let i = 0; i <= history.length - 3; i++)
+      if (history[i].result === 'won' && history[i+1].result === 'won' && history[i+2].result === 'won')
+        return history[i];
+    return null;
+  }
+  function findHardWon() {
+    for (let i = history.length - 1; i >= 0; i--)
+      if (history[i].record === '3-2' && history[i].result === 'won') return history[i];
+    return null;
+  }
+  function findBounceBack() {
+    for (let i = history.length - 1; i >= 1; i--)
+      if (history[i].result === 'lost' && history[i-1].result === 'won') return history[i-1];
+    return null;
+  }
+  function findTenthWeek() {
+    if (totalWeeks < 10) return null;
+    return history[history.length - 10];
+  }
+  function findTenthWon() {
+    if (totalTaken < 10) return null;
+    const wonOldestFirst = history.filter(w => w.result === 'won').reverse();
+    return wonOldestFirst[9] || null;
+  }
+
+  const rewards = [
+    { id: 'first', symbol: 'I', name: 'First Series', desc: 'Take your first series.',
+      earned: totalTaken >= 1, earnedDate: () => { const w = findFirstWonWeek(); return w ? w.endDate : null; },
+      progress: () => Math.min(totalTaken, 1) + '/1' },
+    { id: 'tens', symbol: '10', name: 'Tens', desc: 'Track ten weeks.',
+      earned: totalWeeks >= 10, earnedDate: () => { const w = findTenthWeek(); return w ? w.endDate : null; },
+      progress: () => Math.min(totalWeeks, 10) + '/10' },
+    { id: 'three-peat', symbol: 'III', name: 'Three-Peat', desc: 'Three series taken in a row.',
+      earned: bestStreak >= 3, earnedDate: () => { const w = findThreeInARow(); return w ? w.endDate : null; },
+      progress: () => Math.min(currentStreak, 3) + '/3' },
+    { id: 'hard-won', symbol: '3·2', name: 'Hard Won', desc: 'Take a series 3-2.',
+      earned: !!findHardWon(), earnedDate: () => { const w = findHardWon(); return w ? w.endDate : null; },
+      progress: () => null },
+    { id: 'bounce-back', symbol: '↻', name: 'Bounce Back', desc: 'Take a series the week after dropping one.',
+      earned: !!findBounceBack(), earnedDate: () => { const w = findBounceBack(); return w ? w.endDate : null; },
+      progress: () => null },
+    { id: 'veteran', symbol: 'X', name: 'Veteran', desc: 'Take ten series.',
+      earned: totalTaken >= 10, earnedDate: () => { const w = findTenthWon(); return w ? w.endDate : null; },
+      progress: () => Math.min(totalTaken, 10) + '/10' },
+  ];
+
+  function findNextUp() {
+    const unearned = rewards.filter(r => !r.earned);
+    if (unearned.length === 0) return null;
+    let best = null, bestGap = Infinity;
+    for (const r of unearned) {
+      const p = r.progress ? r.progress() : null;
+      if (!p) continue;
+      const m = p.match(/^(\d+)\/(\d+)$/);
+      if (!m) continue;
+      const gap = (+m[2]) - (+m[1]);
+      if (gap < bestGap) { bestGap = gap; best = r; }
+    }
+    return best || unearned[0];
+  }
+
+  const nextSlot = document.getElementById('next-up-slot');
+  const next = findNextUp();
+  if (next && totalWeeks > 0) {
+    const detail = next.progress && next.progress()
+      ? next.progress() + ' &middot; ' + next.desc.toLowerCase()
+      : next.desc.toLowerCase();
+    nextSlot.innerHTML = `
+      <div class="next-up">
+        <div class="label">next up</div>
+        <div class="name">${next.name}</div>
+        <div class="progress">${detail}</div>
+      </div>`;
+  } else if (totalWeeks === 0) {
+    nextSlot.innerHTML = `
+      <div class="next-up">
+        <div class="label">first up</div>
+        <div class="name">First Series</div>
+        <div class="progress">close out a winning week to start the record</div>
+      </div>`;
+  } else {
+    nextSlot.innerHTML = '';
+  }
+
+  document.getElementById('badge-grid').innerHTML = rewards.map(r => {
+    const status = r.earned
+      ? (r.earnedDate() ? 'earned ' + formatDate(r.earnedDate()) : 'earned')
+      : (r.progress && r.progress() ? r.progress() : 'not yet');
+    return `
+      <div class="badge ${r.earned ? 'earned' : ''}">
+        <div class="symbol">${r.symbol}</div>
+        <div class="name">${r.name}</div>
+        <div class="desc">${r.desc}</div>
+        <div class="status">${status}</div>
+      </div>`;
+  }).join('');
+}
+
+// ---- Backup / Restore ----
+function showBackupStatus(message, type) {
+  const el = document.getElementById('backup-status');
+  el.textContent = message;
+  el.className = 'backup-status show' + (type ? ' ' + type : '');
+  setTimeout(() => {
+    if (el.textContent === message) el.className = 'backup-status';
+  }, 4000);
+}
+function exportData() {
+  try {
+    const payload = {
+      app: 'take-the-series',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      data: data,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'take-the-series-' + dateToISO(new Date()) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showBackupStatus('backup downloaded', 'success');
+  } catch (e) {
+    console.error(e);
+    showBackupStatus('export failed', 'error');
+  }
+}
+function importData(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const payload = JSON.parse(e.target.result);
+      let incoming = payload;
+      if (payload && payload.app === 'take-the-series' && payload.data) {
+        incoming = payload.data;
+      }
+      if (!incoming || !incoming.currentWeek || !Array.isArray(incoming.history)) {
+        showBackupStatus('not a valid backup file', 'error');
+        return;
+      }
+      const proceed = confirm(
+        'Restore from backup?\n\n' +
+        'This will replace your current data with:\n' +
+        '· ' + incoming.history.length + ' archived week' + (incoming.history.length === 1 ? '' : 's') + '\n' +
+        '· ' + (incoming.currentWeek.games.filter(g => g).length) + ' game(s) tracked this week\n\n' +
+        'Your current data will be lost.'
+      );
+      if (!proceed) {
+        showBackupStatus('restore cancelled');
+        return;
+      }
+      data = incoming;
+      const rolled = checkRollover(data);
+      save(data);
+      renderAll();
+      if (rolled) showToast(rolled);
+      showBackupStatus('backup restored', 'success');
+    } catch (err) {
+      console.error(err);
+      showBackupStatus('could not read file', 'error');
+    }
+  };
+  reader.onerror = function() { showBackupStatus('could not read file', 'error'); };
+  reader.readAsText(file);
+}
+
+document.getElementById('export-btn').addEventListener('click', exportData);
+document.getElementById('import-btn').addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+document.getElementById('import-file').addEventListener('change', e => {
+  if (e.target.files && e.target.files[0]) {
+    importData(e.target.files[0]);
+    e.target.value = '';
+  }
+});
+
+renderAll();
 if (rolledOver) showToast(rolledOver);
 </script>
-  
+
+<!-- Iframe height messenger -->
+<script>
+(function() {
+  if (window.parent === window) return;
+  function postHeight() {
+    const h = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    window.parent.postMessage({ type: 'fivegame-height', height: h }, '*');
+  }
+  window.addEventListener('load', postHeight);
+  window.addEventListener('resize', postHeight);
+  if (window.ResizeObserver) {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+})();
+</script>
 </body>
 </html>
