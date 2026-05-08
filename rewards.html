@@ -23,14 +23,13 @@ body {
   position: relative;
   overflow-x: hidden;
 }
-.grain {
-  position: fixed;
+.grain.grain {
+  position: absolute;  /* was: fixed */
   inset: 0;
-  background-image: repeating-radial-gradient(circle at 30% 20%, rgba(80,60,30,0.04) 0, rgba(80,60,30,0.04) 1px, transparent 1px, transparent 4px);
-  mix-blend-mode: multiply;
-  pointer-events: none;
-  z-index: 0;
+  min-height: 100%;
+  ...
 }
+
 .container {
   max-width: 760px;
   margin: 0 auto;
